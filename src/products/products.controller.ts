@@ -6,14 +6,14 @@ export class ProductsController
     constructor(private readonly productService: ProductsService){}
 
     @Post()
-    addProduct (
+    async addProduct (
         @Body('title') prodTitle:string, 
         @Body('decsription') prodDiscription:string,
         @Body('price') prodPrice:number
-    ): any {
+    ) {
 
 
-      const genID =  this.productService.insertProduct(
+      const genID = await this.productService.insertProduct(
           prodTitle,
           prodDiscription,
           prodPrice);
@@ -24,9 +24,11 @@ export class ProductsController
 
 
     @Get()
-    getAllProducts()
+    async getAllProducts()
     {
-        return this.productService.getProducts();
+        const products = await this.productService.getProducts();
+        return products;
+        
     }
 
     @Get(':id')
