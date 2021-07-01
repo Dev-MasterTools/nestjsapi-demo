@@ -38,13 +38,13 @@ export class ProductsController
     }
 
     @Patch(':id')
-    updateProduct(
+   async updateProduct(
         @Param('id') prodId: string,
         @Body('title') prodTitle:string, 
         @Body('decsription') prodDiscription:string,
         @Body('price') prodPrice:number
     ){
-        this.productService.updateProduct(
+      await  this.productService.updateProduct(
             prodId,
             prodTitle,
             prodDiscription,
