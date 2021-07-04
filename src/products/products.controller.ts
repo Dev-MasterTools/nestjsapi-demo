@@ -4,19 +4,27 @@ import { ProductsService } from './products.service';
 export class ProductsController 
 {
     constructor(private readonly productService: ProductsService){}
-
     @Post()
-    async addProduct (
+    async addProduct
+    (
         @Body('title') prodTitle:string, 
         @Body('decsription') prodDiscription:string,
-        @Body('price') prodPrice:number
+        @Body('price') prodPrice:number,
+        @Body('category') prodCategory:string, 
+        @Body('image') prodImage:string,
+        @Body('quantity') prodQuantity:number
+         
     ) {
 
 
-      const genID = await this.productService.insertProduct(
+      const genID = await this.productService.insertProduct
+      (
           prodTitle,
           prodDiscription,
-          prodPrice);
+          prodPrice,
+          prodCategory,
+          prodImage,
+          prodQuantity);
 
       return "user ID : " + genID;
     }
@@ -42,13 +50,20 @@ export class ProductsController
         @Param('id') prodId: string,
         @Body('title') prodTitle:string, 
         @Body('decsription') prodDiscription:string,
-        @Body('price') prodPrice:number
+        @Body('price') prodPrice:number,
+        @Body('category') prodCategory:string, 
+        @Body('image') prodImage:string,
+        @Body('quantity') prodQuantity:number
     ){
-      await  this.productService.updateProduct(
+      await  this.productService.updateProduct
+      (
             prodId,
             prodTitle,
             prodDiscription,
-            prodPrice
+            prodPrice,
+            prodCategory,
+            prodImage,
+            prodQuantity
         )
 
         return "Product ID " + prodId + " was updated"

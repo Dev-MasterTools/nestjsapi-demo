@@ -13,11 +13,24 @@ export class ProductsService{
 
     constructor(@InjectModel('Product') private readonly productModel: Model<Product>){}
 
-    async insertProduct(title: string, desc: string, price: number){
-        const newProduct = new this.productModel({
+    async insertProduct
+    (
+        title: string, 
+        desc: string, 
+        price: number, 
+        category:string,
+        image:string,
+        quantity: number
+
+        ){
+        const newProduct = new this.productModel
+        ({
             title: title,
             decsription: desc,
             price : price,
+            category : category,
+            image: image,
+            quantity: quantity
         });
        const result = await newProduct.save();
        console.log(result);
@@ -28,11 +41,15 @@ export class ProductsService{
     async getProducts()
     {
         const products = await this.productModel.find().exec();
-        return products.map(prod => ({
-        id: prod.id,
-        title: prod.title,
-        decsription: prod.decsription,
-        price: prod.price,
+        return products.map(prod => 
+        ({
+            id: prod.id,
+            title: prod.title,
+            decsription: prod.decsription,
+            price: prod.price,
+            category: prod.category,
+            image: prod.image,
+            quantity: prod.quantity,
     
         }));
     }
@@ -46,6 +63,9 @@ export class ProductsService{
                  title: product.title,
                  decsription: product.decsription,
                  price: product.price,
+                 category: product.category,
+                 image: product.image,
+                 quantity: product.quantity
              };
           
 
@@ -55,7 +75,10 @@ export class ProductsService{
         productID: string,
         title: string, 
         desc: string, 
-        price: number
+        price: number,
+        category:string,
+        image:string,
+        quantity: number
         )
         {
             const updatedProduct = await this.findProduct(productID);
@@ -71,6 +94,18 @@ export class ProductsService{
              if(price)
              {
                  updatedProduct.price = price;
+             }
+             if(category)
+             {
+                 updatedProduct.category = category;
+             }
+             if(image)
+             {
+                 updatedProduct.image = image;
+             }
+             if(quantity)
+             {
+                 updatedProduct.quantity = quantity;
              }
              updatedProduct.save();
         }
